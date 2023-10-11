@@ -6,7 +6,7 @@ Created on Wed Oct 11 01:02:35 2023
 """
 
 import numpy as np
-
+import scipy.stats as st
 
 sig = 1 # std
 def data_generator(M, p1, theta, N) : 
@@ -32,5 +32,34 @@ def data_generator(M, p1, theta, N) :
     X_1 = X_0 + theta
     eps = np.random.binomial(1, p1, M)
     
-    return eps * X_1 + (1-eps) * X_0
+    return eps * X_1 + (1-eps) * X_0, eps
+
+
+
+A = 2
+N = 2
+theta = A/np.sqrt(2) * np.ones((N,1))
+p1 = .2
+M = 100_000
+
+
+data = data_generator(M, p1, theta, N)
+X = data[0]
+eps = data[1]
+### MPE test error rate ###
+MPE_test = X.T @ theta > sig**2 * np.log((1-p1)/p1) + np.sum(theta*theta)/2
+err_rate_MPE = np.sum(np.abs(MPE_test.T - eps))/M
+print(f"MPE test error rate : {err_rate_MPE:.4f}")
+
+
+### NP error rate ###
+gamma = 1e-3
+NP_test = X.T @ theta > sig * np.linalg.norm(theta) * st.norm.ppf(1-gamma)
+err_rate_NP = np.sum(np.abs(NP_test.T - eps))/M
+print(f"NP test error rate : {err_rate_NP:.4f}")
+
+
+
+
+
 
