@@ -1,0 +1,117 @@
+%%%%%%%%%%%% Package %%%%%%%%%%%
+\usepackage{etex}
+\usepackage{xfakebold} %Pour le gras
+\usepackage{esvect}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[autolanguage]{numprint} % Pour écrire les nombres comme dans la langue du text
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts, amsthm}
+\usepackage{systeme} 
+\usepackage{empheq,etoolbox}
+\usepackage{array}
+\usepackage{nicematrix}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{cancel}
+\usepackage{wrapfig}
+\usepackage{stmaryrd}
+\usepackage{bbm}
+\usepackage{booktabs}
+% Interligne
+\usepackage{setspace}
+\usepackage{verbatim}
+% \singlespacing
+%\onehalfspacing
+% \doublespacing
+\usepackage{multirow, multicol}
+\usepackage{adjustbox}
+\usepackage{cite}
+\usepackage{titlesec}
+
+\usepackage{listings}
+\usepackage[framed, numbered]{matlab-prettifier}
+
+
+
+
+%%%%%% Geometry %%%%%%%
+\usepackage{geometry}
+\geometry{left=1.5cm,right=1.5cm,top=2cm,bottom=2cm}
+\savegeometry{1}
+
+\geometry{left=1cm,right=1cm,top=2.7cm,bottom=1.4cm}
+\savegeometry{2}
+
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+\savegeometry{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{graphicx,mwe,fancyhdr}
+\usepackage{fancybox}
+\usepackage{siunitx}
+\sisetup{locale = FR,
+	detect-all,range-phrase=-,     
+	range-units=single,
+	separate-uncertainty = true,
+	multi-part-units = single
+}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+%\hypersetup{final}
+\usepackage{tabularx}
+\usepackage{color,xcolor}
+\usepackage[table]{}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\setlength{\arrayrulewidth}{.5mm}
+%\arrayrulecolor{blue}
+
+\usepackage[most]{tcolorbox}
+
+%%%%% Graphique %%%%%%%%
+%\usepackage{tikz}
+	\usepackage{tikz-network}       % Pour la théorie des graphes (vertices & edges)
+	
+	\tikzset{>=stealth}
+	\usepackage{pgfplots,pgfplotstable}
+	%\usepackage[miktex]{gnuplottex}
+	\pgfkeys{/pgf/number format/1000 sep={\,}, /pgf/number format/use comma,  } % Pour avoir des virgules au lieu des points comme séparateur décimal dans les Axes graph
+	%\pgfkeys{/pgf/plot/gnuplot call='C:\Program Files\gnuplot\bin\gnuplot'}
+	\pgfplotsset{compat=newest}
+	\usepackage{mathrsfs}
+	\usepgfplotslibrary{groupplots}
+	\usetikzlibrary{shapes.geometric, shapes.misc, intersections,calc, arrows}
+	\lstset{ %
+		language=R,                     % the language of the code
+		basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+		numbers=left,                   % where to put the line-numbers
+		numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+		stepnumber=1,                   % the step between two line-numbers. If it's 1, each line
+		% will be numbered
+		numbersep=5pt,                  % how far the line-numbers are from the code
+		backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+		showspaces=false,               % show spaces adding particular underscores
+		showstringspaces=false,         % underline spaces within strings
+		showtabs=false,                 % show tabs within strings adding particular underscores
+		%frame=single,                   % adds a frame around the code
+		rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+		tabsize=2,                      % sets default tabsize to 2 spaces
+		captionpos=b,                   % sets the caption-position to bottom
+		breaklines=true,                % sets automatic line breaking
+		breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+		title=\lstname,                 % show the filename of files included with \lstinputlisting;
+		% also try caption instead of title
+		keywordstyle=\color{blue},      % keyword style
+		commentstyle=\color{dkgreen},   % comment style
+		stringstyle=\color{mauve},      % string literal style
+		escapeinside={\%*}{*)},         % if you want to add a comment within your code
+		morekeywords={*,...}            % if you want to add more keywords to the set
+	} 
+\usetikzlibrary{matrix}
+

@@ -1,0 +1,112 @@
+%%%%%%% Commandes Perso %%%%%%%%
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator{\Ham}{\mathcal{H}}	% Opérateur hamiltonien
+\DeclareMathOperator*{\argmax}{argmax} % Les antecedants du max
+\DeclareMathOperator*{\argmin}{argmin} % Les antecedants du max
+\DeclareMathOperator{\sinc}{\text{sinc}} % sinus cardinal
+\DeclareMathOperator{\erfc}{\text{erfc}}
+\renewcommand{\Re}{\text{Re}}			 % Partie réelle
+\DeclareMathOperator{\sgn}{\text{sgn}}	 % Fonction signe
+\DeclareMathOperator{\e}{\text{e}}		 % L'opérateur exponentiel e
+\DeclareSIUnit{\baud}{\text{baud}}
+\DeclareSIUnit{\sym}{\text{sym}}
+\newcommand{\iu}{\mathrm{i}}			 % i imaginaire complexe
+\newcommand{\deriv}{\text{d}}			 % le d de la différenciabilité
+\newcommand{\ens}[1]{\mathbb{#1}}              					%Ensemble usuelle : N, Z, R, C, Q, K
+\newcommand{\abs}[1]{\left\vert {#1}\right\vert}				%Valeur absolue
+\newcommand{\partiel}[2]{\frac{\partial {#1}}{\partial {#2}}}	%derivée partielle
+\newcommand{\pesp}{\,}											%petit espace
+\newcommand{\gesp}{\;}											%grand espace
+\newcommand{\nesp}{\˽}											%normal espace
+\newcommand{\grandm}{\displaystyle}								%grande écriture maths
+\newcommand{\petitm}{\scriptstyle}								%petite écriture maths
+\newcommand{\im}[1]{\text{Im}\,{#1}}							%Ensemble image
+\newcommand{\Ker}[1]{\text{Ker}\,{#1}}							%Noyau ou Ker
+\newcommand{\somme}[2]{\overset{#2}{\underset{#1}{\sum}} \,}	%Operateur de sommation
+%\newcommand{\norm}[1]{\left\Vert #1\right\Vert}
+\newcommand{\norm}[1]{\left\|{#1}\right\|}						%Norme vectorielle avec 2 barres
+\newcommand{\fonctnorm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 % Norme fonctionnelle avec 3 barres
+		\right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+\newcommand{\ensvide}{\varnothing}								%Ensemble vide
+\newcommand{\limite}[1]{\lim\limits_{#1}}						%Operateur de limite
+\newcommand{\boule}[2]{\mathcal{B}\left({#1},{#2}\right)}		%Boule avec centre et rayon
+\newcommand{\boulef}[2]{\overline{\mathcal{B}}\left({#1},{#2}\right)} %Boule fermée 
+\newcommand{\sphere}[2]{\mathcal{S}\left({#1},{#2}\right)} 				%Sphere avec centre et rayon
+\newcommand{\spheref}[2]{\overline{\mathcal{S}}\left({#1},{#2}\right)} 
+\newcommand{\disqf}[2]{\overline{\mathcal{D}}\left({#1},{#2}\right)}	%Disque fermée
+\newcommand{\disq}[2]{\mathcal{D}\left({#1},{#2}\right)}				%Disque ouvert
+\newcommand{\dif}[2]{\mathrm{d}_{#2}{#1}}								%Différentielle d'une fonction en un point
+\newcommand{\Vecteur}[1]{\boldsymbol{\mathbf{#1}}}						%Vecteur gras
+\newcommand{\jac}[2]{J_{#2} #1}											%Jacobienne d'une fonction en un point
+\newcommand{\transp}[1]{{}^\text{t}\! #1}								%La transposée
+\newcommand{\prdtscal}[2]{\langle #1, #2\rangle} 						%Produit scalaire
+\newcommand{\flux}[2]{\Phi_{{#1}\rightarrow{#2}}}						%Flux d'un champs le long d'une surface
+\newcommand{\ensemble}[2]{\left\lbrace   #1\; \left|\; #2 \right\rbrace  \right.} %Ensemble en compréhension
+\renewcommand*{\overrightarrow}[1]{\vbox{\halign{##\cr 
+			\tiny\rightarrowfill\cr\noalign{\nointerlineskip\vskip1pt} 
+			$#1\mskip2mu$\cr}}}
+\newcommand{\vecteur}[1]{\overrightarrow{#1}\hspace*{-2pt}}							%Vecteur avec une grande fleche
+\newcommand{\Int}[4]{\int_{#1}^{#2} {#3} \mathrm{d}#4}					%Intégrale
+\renewcommand{\thefootnote}{(\alph{footnote})}	
+\DeclareMathOperator{\rot}{\vecteur{\text{rot}}} 						% Rotationnel
+\DeclareMathOperator{\divergence}{\mathrm{div}}						% Divergence
+\DeclareMathOperator{\gradient}{\vecteur{\mathrm{grad}}}				% Gradient
+
+%%%%%% Definition de la gaussienne pour PGF %%%%%
+\pgfmathdeclarefunction{gauss}{2}{%
+	\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+%% variable de gauss(<moyenne>,<ecart-type>)
+
+
+\pgfplotsset{
+	legend entry/.initial=,
+	every axis plot post/.code={%
+		\pgfkeysgetvalue{/pgfplots/legend entry}\tempValue
+		\ifx\tempValue\empty
+		\pgfkeysalso{/pgfplots/forget plot}%
+		\else
+		\expandafter\addlegendentry\expandafter{\tempValue}%
+		\fi
+	},
+}
+
+
+
+\newcommand*{\colorboxed}{}
+\def\colorboxed#1#{%
+	\colorboxedAux{#1}%
+}
+\newcommand*{\colorboxedAux}[3]{%
+	% #1: optional argument for color model
+	% #2: color specification
+	% #3: formula
+	\begingroup
+	\colorlet{cb@saved}{.}%
+	\color#1{#2}%
+	\boxed{%
+		\color{cb@saved}%
+		#3%
+	}%
+	\endgroup
+}
+
+\setlength{\fboxrule}{0.3mm}
+
+%\setBold[0.2] % Active la police grasse 
+
+%%%%%%%%% Environnement Perso %%%%%%%%
+\theoremstyle{definition}	 %Garde la même police pour l'environnement 
+\newtheorem{questo}{Question}[section] % Création de l'environnement exo dont le numérotage est indépendant des autres environnement
+\newtheorem{manip}{Manipulation}[section] % Création de l'environnement question dont le numerotage depend de l'environnement exo
+\pagestyle{plain} 
+
+%%%%%%%%% Environnement Tcolor Perso %%%%%%%%
+\newtcbtheorem{tquesto}{Question}{colback=blue!5, colframe=blue!60!black}{}
+\newtcbtheorem[number within = section]{tmanip}{Manipulation}{colback=red!5, colframe=red!60!black}{}
+
+
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}

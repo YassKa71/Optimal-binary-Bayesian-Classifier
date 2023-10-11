@@ -1,0 +1,190 @@
+\documentclass[12pt,a4paper]{article}
+
+
+\input{MyPackages.tex}
+\input{MyCommandes.tex}
+
+% \usepgfplotslibrary{external}
+% \tikzexternalize[prefix=./tikz/,optimize command away=\includepdf,shell escape=-enable-write18]
+% \tikzset{external/system call= {pdflatex -save-size=80000 
+%                           -pool-size=10000000 
+%                           -extra-mem-top=50000000 
+%                           -extra-mem-bot=10000000 
+%                           -main-memory=90000000 
+%                           \tikzexternalcheckshellescape 
+%                           -halt-on-error 
+%                           -interaction=batchmode
+%                           -jobname "\image" "\texsource"}}
+
+%\setBold[0.2] % Active la police grasse 
+\title{\textsc{Machine Learning LAB - Optimal binary Bayesian classifer}}
+\author{Mahamat HAMID \and Yassine KADDAMI}
+%\date{October 2022}
+
+\begin{document}
+	\loadgeometry{1}
+	\maketitle
+	%\tableofcontents
+	%\newpage
+	\section{Theoretical computations}
+	The purpose of this lab is to study the MPE test and assess it with respect to the Neyman-pearson test.
+Section 1 is dedicated to the theoretical computations that you are asked in Section 2 to implement so as
+to run simulations and verify these theoretical results. All the results needed to write your routines, in
+whatever language you wish to use, are given below; in Section 1.2, these results are framed. Hence, it is
+suggested that you begin by carrying out the simulations of Section 2 and make the theoretical computations
+later. You can return your theoretical computations in latex, word or even as a photo of your hand-writen
+notes (if the writing and the presentation are clear).
+\subsection{The MPE test and its probability of error}
+
+We consider the binary hypothesis testing problem : 
+$$ \begin{cases}
+    \mathcal{H}_0 :\,  X \sim \mathcal{N}(0,\sigma^2 \textbf{I}_N) \\
+    \mathcal{H}_1 :\,   X \sim \mathcal{N}(\theta,\sigma^2 \textbf{I}_N)
+\end{cases} \quad \text{where }\sigma>0 \text{ and } \theta \in \ens{R}^N $$
+ We assume the existence of prior probabilities of occurrence $\pi_0$ and $\pi_1$
+for $\mathcal{H}_0$ and $\mathcal{H}_1,$ respectively. Alternatively, we can also pose : 
+$$X = \varepsilon X_1 + (1-\varepsilon)X_0 $$
+where $\varepsilon, X_0$ and $X_1$ are random variables defined in same probability space $(\Omega, \Sigma, \ens{P})$ such that :
+
+\begin{itemize}[label = $\bullet$]
+    \item $ X_0 \sim \mathcal{N}(0,\sigma^2 \textbf{I}_N) $ and $X_1 \sim \mathcal{N}(\theta,\sigma^2 \textbf{I}_N)$
+    \item  $\varepsilon$ is independant of $X_1$ and  $X_0$
+    \item  $\pi_0 = \ens{P}(\varepsilon = 0)$ and $\pi_1 =\ens{P}(\varepsilon = 1)$
+\end{itemize}
+
+
+\begin{tquesto}{}{}
+Compute the likelihood ratio $\Lambda = p_1/p_0 $ of the two hypotheses where $p_1$ is the pdf of $X_1$ and $p_0$
+that of $X_0$ (see slide 17) (\textbf{2 pts}).
+\end{tquesto}
+
+L'expression des densités de probabilités $p_1$ et $p_0$ est la suivante : 
+ $$ \begin{cases}
+     p_0(x) & = \dfrac{1}{(2\pi)^{N/2}\sqrt{\abs{\det\left( \sigma^2 \textbf{I}_N \right)}}}\exp\left\{ -\dfrac{1}{2\sigma^2} x^t \cdot \textbf{I}_N\cdot x \right\} \\
+
+     p_1(x) & = \dfrac{1}{(2\pi)^{N/2}\sqrt{\abs{\det\left( \sigma^2 \textbf{I}_N \right)}}}\exp\left\{ -\dfrac{1}{2\sigma^2} (x-\theta)^t \cdot \textbf{I}_N\cdot (x-\theta) \right\} 
+ \end{cases}$$
+Ainsi en faisant le rapport on trouve : 
+
+\begin{align*}
+    \Lambda (x) & =  \dfrac{\exp\left\{ -\dfrac{1}{2\sigma^2} (x-\theta)^t \cdot \textbf{I}_N\cdot (x-\theta) \right\} } {\exp\left\{ -\dfrac{1}{2\sigma^2} x^t \cdot \textbf{I}_N\cdot x \right\}} \\ 
+    & = \dfrac{\exp\left\{ -\dfrac{1}{2\sigma^2}\norm{x-\theta}^2 \right\}}{\exp\left\{ -\dfrac{1}{2\sigma^2}\norm{x}^2 \right\}} \\
+    & = \exp\left\{  -\dfrac{1}{2\sigma^2}\left(\norm{x-\theta}^2 - \norm{x}^2\right) \right\} = \exp\left\{  -\dfrac{1}{2\sigma^2}\left(\cancel{\norm{x}^2} + \norm{\theta}^2 - 2x^t\cdot\theta - \cancel{\norm{x}^2}\right) \right\}
+\end{align*}
+ D'où : $$     \colorboxed{red}{\Lambda (x) =  \exp\left\{ \dfrac{1}{\sigma^2}\left(x^t\cdot \theta - \dfrac{\norm{\theta}^2}{2} \right)\right\}}$$
+
+\begin{tquesto}{}{}
+Show that the MPE classifier (see slides 16 and 17) is given by :
+$$ \forall x \in \ens{R}^N,\quad g_\text{MPE}(x) = \begin{cases}
+    1 &\text{ if } x^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \\
+    0 & \text{ otherwise } 
+\end{cases} $$
+(\textbf{2 pts})
+\end{tquesto}
+
+ \begin{align*}
+\pi_1 p_1(x) > \pi_0 p_0(x) & \Longleftrightarrow \dfrac{p_1}{p_0}(x) > \dfrac{\pi_0}{\pi_1} \quad\text{ si }\pi_1, p_0(x) \text{ non nuls} \\
+ & \Longleftrightarrow \Lambda(x) > \dfrac{\pi_0}{\pi_1} \\
+ & \Longleftrightarrow \exp\left\{ \dfrac{1}{\sigma^2}\left(x^t\cdot \theta - \dfrac{\norm{\theta}^2}{2} \right)\right\} > \dfrac{\pi_0}{\pi_1} \\
+ \pi_1 p_1(x) > \pi_0 p_0(x) & \Longleftrightarrow x^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2
+ \end{align*}
+
+ Ainsi le test $g_\text{MPE}$ defini par : 
+ $$  \forall x \in \ens{R}^N,\quad g_\text{MPE}(x) = \begin{cases}
+    1 &\text{ if } \Lambda(x) > \pi_0/\pi_1  \\
+    0 & \text{ otherwise } \end{cases} $$
+
+s'écrit comme suit :
+$$ \forall x \in \ens{R}^N,\quad g_\text{MPE}(x) = \begin{cases}
+    1 &\text{ if } x^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \\
+    0 & \text{ otherwise } 
+\end{cases} $$
+
+
+\begin{tquesto}{}{}
+Show that the probability of error of the MPE test (see slides p.15) is:
+
+$$ \ens{P}_e (g_\text{MPE}) =   \pi_0 \left( 1-\Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2}\right) \right) +\pi_1 \Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} - \dfrac{\rho}{2}\right) $$
+with $\rho = \norm{\theta}/\sigma$ and $\Phi$ is the cumultaive distribution function (cdf) of the normal distribu-
+tion $\mathcal{N}(0,1)$.\\
+(\textbf{4 pts})
+\end{tquesto}
+Par définition, la probabilité d'erreur est donnée par : 
+$$
+    \ens{P}_e\left(g_\text{MPE}(X)\right)  = \pi_0 \ens{P}\left(g_\text{MPE}(X_0) = 1 \right) + \pi_1 \ens{P}\left(g_\text{MPE}(X_1) = 0 \right) $$
+Donc 
+\begin{align*}
+    \ens{P}_e\left(g_\text{MPE}(X)\right) & =
+    \pi_0 \ens{P}\left(X_0^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) + \pi_1 \ens{P}\left(X_1^t\cdot\theta 
+\leq \sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) 
+\end{align*}
+Or $\begin{cases}
+    X_0^t\cdot\theta \sim \mathcal{N}(0,\sigma^2\norm{\theta}^2) \\
+    X_1^t\cdot\theta \sim \mathcal{N}(\norm{\theta}^2,\sigma^2\norm{\theta}^2)
+\end{cases} \Longrightarrow \begin{cases}
+    \dfrac{X_0^t\cdot\theta}{\sigma\norm{\theta}}  &\sim \mathcal{N}(0,1) \\
+    \dfrac{X_1^t\cdot\theta- \norm{\theta}^2}{\sigma\norm{\theta}} &\sim \mathcal{N}(0,1)
+\end{cases}$\\
+Donc :
+$$
+\begin{cases}
+    X_0^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \\
+    X_1^t\cdot\theta 
+\leq \sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2
+\end{cases} \Longleftrightarrow \begin{cases}
+    \dfrac{X_0^t\cdot\theta}{\sigma\norm{\theta}} > \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2} \\
+    \dfrac{X_1^t\cdot\theta -\norm{\theta}^2}{\sigma\norm{\theta}}
+\leq \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} - \dfrac{\rho}{2}
+\end{cases}
+$$
+Donc : 
+$$\begin{cases}
+    \ens{P}\left(X_0^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) & = \ens{P}\left(\dfrac{X_0^t\cdot\theta}{\sigma\norm{\theta}} > \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2}\right) = 1-\Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2}\right)  \\
+
+    \ens{P}\left(X_1^t\cdot\theta 
+\leq \sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) & = \ens{P}\left(\dfrac{X_1^t\cdot\theta -\norm{\theta}^2}{\sigma\norm{\theta}}
+\leq \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} - \dfrac{\rho}{2}  \right)  = \Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} -\dfrac{\rho}{2}\right)
+\end{cases}
+$$
+Ce qui donne finalement : 
+$$  \ens{P}_e (g_\text{MPE}) =   \pi_0 \left( 1-\Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2}\right) \right) +\pi_1 \Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} - \dfrac{\rho}{2}\right) $$
+
+
+\subsection{A detour by the Neyman-Pearson theory}
+In this section, we apply the Neymal-Pearson (NP) test to the classification problem considered so far.
+We make the computations to state the results that you are asked to use in the next section to carry
+out simulations. It is recommended that you take some time at home to fully understand the following
+reasoning and calculations. For the lab session, admit the formulas given below and try to proce them
+later. They are not so difficult to prove and if necessary contact me for further explanations.
+According to your course on statistics, the NP test $g^\gamma_\text{NP}$ with size $\gamma \in ]0,1[$  to test $\mathcal{H}_0$ against $\mathcal{H}_1$
+when we ignore the priors $\pi_0$ and $\pi_1$ is given by
+
+$$ \forall x\in \ens{R}^N,\quad g_\text{NP}^\gamma(x) = \begin{cases}
+    1 & \text{ if } \Lambda (x) > \lambda \\
+    0 & \text{ otherwise}
+\end{cases} $$
+where, as above, $\Lambda$ is the likelihood ration and $\lambda$ satisfies the equation $\ens{P}(\Lambda(X_0) > \lambda) = \gamma$
+
+
+\begin{tquesto}{}{}
+Prove the inequality $\forall A>0,\, \forall \gamma \in ]0;1[, \quad 1- \Phi(A/2) \leqslant \num{.5}\cdot\left(\gamma + \Phi\left(\Phi^{-1}(1-\gamma)-A\right)\right)$
+(\textbf{1 pt}).
+\end{tquesto}
+Considérons le cas où les probabilités à priori sont telles que :
+$\pi_0 = \pi_1 = 1/2$. Par définition du MPE, on a que :
+\begin{equation}
+ \ens{P}_e(g_\text{MPE}) \leqslant \ens{P}_e(g) \label{MPE} \tag{$*$}   
+\end{equation}
+et ce $\forall g \in \mathcal{F}(\ens{R}^N, \{0,1\}).$\\
+Soit $A,\gamma \in \ens{R}_+^*\times ]0;1[$ tels que $A = \rho = \norm{\theta}/\sigma $ et $\gamma$ défini une pfa comme ci-dessus. D'après \eqref{MPE}, en posant $g = g_\text{NP}^\gamma$ on a : 
+\begin{align*}
+  \ens{P}_e(g_\text{MPE}) \leqslant \ens{P}_e(g_\text{NP}^\gamma) & \Longleftrightarrow  \dfrac{1}{2}\left(1-\Phi\left(\dfrac{A}{2}\right)\right) + \dfrac{1}{2}\Phi\left(-\dfrac{A}{2}\right) \leqslant \dfrac{1}{2}\cdot\left(\gamma + \Phi\left(\Phi^{-1}(1-\gamma)-A\right)\right) \\
+  & \intertext{Or :  $\Phi(-x) = 1-\Phi(x)$}\\
+  & \Longleftrightarrow \dfrac{1}{2}\left(1-\Phi\left(\dfrac{A}{2}\right)\right) + \dfrac{1}{2}\left(1-\Phi\left(\dfrac{A}{2}\right)\right) \leqslant \dfrac{1}{2}\cdot\left(\gamma + \Phi\left(\Phi^{-1}(1-\gamma)-A\right)\right)
+\end{align*}
+D'où 
+$$  1- \Phi\left(\dfrac{A}{2}\right) \leqslant \frac{1}{2}\cdot\left(\gamma + \Phi\left(\Phi^{-1}(1-\gamma)-A\right)\right) \qquad \forall A \in \ens{R}_+^*, \gamma \in ]0,1[. $$
+
+\section{Numerical simulations}
+The purpose of these numerical simulations is to verify numerically the theoretical results stated above for the MPE and the NP tests.
+\end{document}
