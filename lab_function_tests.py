@@ -100,8 +100,15 @@ ax.axhline(y = Pe_NP, color = 'b', label = r'$\mathbb{P}_e(g_{NP})$')
 plt.xlabel("Monte carlo number")
 plt.ylabel("Error rate")
 ax.legend()
+plt.title(" Error rates and probabilities of error of NP and MPE tests")
+plt.savefig("Error_rate.pdf", bbox_inches='tight')
 plt.show()
 
+# Numerical verification of inequality question 4
+LHS = 1 - st.norm.cdf(A/2)
+RHS = 1/2 * (gamma + st.norm.cdf(st.norm.ppf(1-gamma)-A))
+print(f"Left hand side of the inequality of question 4 : {LHS}") 
+print(f" Right hand side of the inequality of question 4: {RHS}") 
 
 
 

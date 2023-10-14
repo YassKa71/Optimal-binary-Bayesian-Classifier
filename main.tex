@@ -109,10 +109,34 @@ with $\rho = \norm{\theta}/\sigma$ and $\Phi$ is the cumultaive distribution fun
 tion $\mathcal{N}(0,1)$.\\
 (\textbf{4 pts})
 \end{tquesto}
+Montrons d'abord que:
+\begin{align*}
+	\text{Si} \quad Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) \quad \text{alors} \quad Z^T\theta \sim \mathcal{N}(a\|\theta\|^2, \|\theta\|^2\sigma^2)
+\end{align*}
+Soit $ Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) $.  $ Z^T\theta $ est gaussien puisque c'est une combinaison linéaire d'éléments d'un vecteur gaussien.\\
+Il suffit donc de montrer que :
+$\begin{cases}
+	\mathbb{E}[Z^T\theta] = a\|\theta\|^2 \\
+	\mathbb{V}[Z^T\theta] = \|\theta\|^2\sigma^2 
+\end{cases}$\\
+$$
+	\mathbb{E}[Z^T\theta] = \mathbb{E}\left[\sum_{i=1}^{N} Z_{i}\theta_{i}\right] = \sum_{i=1}^{N} \theta_{i} \mathbb{E}[Z_{i}] = \sum_{i=1}^{N} a\theta_{i}^2 = a\|\theta\|^2 $$
+\begin{align*}
+	\mathbb{V}[Z^T\theta] & =
+	 \mathbb{E}[(Z^T\theta - a\|\theta\|^2)^2] \\ & =\mathbb{E}[(\sum_{i=1}^{N} (Z_{i}\theta_{i} - a\theta_{i}^2))^2] \\ & =
+	 \mathbb{E}[(\sum_{i=1}^{N} (Z_{i}\theta_{i} - a\theta_{i}^2))(\sum_{j=1}^{N} (Z_{j}\theta_{j} - a\theta_{j}^2))]  \\ & =
+	  \mathbb{E}[(\sum_{i=1}^{N} \sum_{j=1}^{N} (Z_{i}\theta_{i} - a\theta_{i}^2)(Z_{j}\theta_{j} - a\theta_{j}^2))]\\ & =
+	  \sum_{i=1}^{N} \sum_{j=1}^{N} \theta_{i}\theta_{j}\mathbb{E}[( (Z_{i} - a\theta_{i})(Z_{j} - a\theta_{j}))]
+\end{align*}
+Puisque la matrice de covariance de Z vaut $ \sigma^2\mathbf{I}_N $, on obtient:
+$$ 
+	\mathbb{V}[Z^T\theta] = \sum_{i=1}^{N} \sum_{j=1}^{N} \theta_{i}\theta_{j}\sigma^2\delta_{ij} =\sigma^2 \sum_{i=1}^{N} \theta_{i}^2 = \sigma^2\|\theta\|^2 $$
+On peut maintenant répondre à la question on utilisant le résultat démontré ci-dessus.
 Par définition, la probabilité d'erreur est donnée par : 
 $$
     \ens{P}_e\left(g_\text{MPE}(X)\right)  = \pi_0 \ens{P}\left(g_\text{MPE}(X_0) = 1 \right) + \pi_1 \ens{P}\left(g_\text{MPE}(X_1) = 0 \right) $$
 Donc 
+
 \begin{align*}
     \ens{P}_e\left(g_\text{MPE}(X)\right) & =
     \pi_0 \ens{P}\left(X_0^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) + \pi_1 \ens{P}\left(X_1^t\cdot\theta 
@@ -187,10 +211,21 @@ $$  1- \Phi\left(\dfrac{A}{2}\right) \leqslant \frac{1}{2}\cdot\left(\gamma + \P
 
 \section{Numerical simulations}
 The purpose of these numerical simulations is to verify numerically the theoretical results stated above for the MPE and the NP tests.\\
-\lstinputlisting[style=Matlab-editor, basewidth=0.5em, language=python, numbers=none]{lab_function_tests.py}
+\begin{tquesto}{}{}
+	1. Write a function with input parameters $M$, $\pi_1$, $\theta$, $N$ to generate $M$ realizations of $X$ as defined in (1).\\
+	2. Calculate the error rate of the MPE test when $N = 2$, $\theta = A\left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right)$, $A$ varies in $[1, 10]$, $\pi_1 = 0.2$, $\sigma = 1$. Choose $M$ at will but don't choose a too small value, otherwise, your simulations will not fit well the theoretical results.\\
+	3. Calculate the error rate of the Neyman-Pearson test with size $\gamma = 10^{-3}$ when, as above, $N = 2$, $\theta = A\left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right)$, $A$ varies in $[1, 10]$, $\pi_1 = 0.2$.\\
+	4. Calculate numerically the probabilities of error of the MPE test and the NP with size $\gamma = 10^{-3}$ (cf. questions 2 and (4)) when, as above, $N = 2$, $\theta = A\left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right)$, $A$ varies in $[1, 10]$, and $\pi_1 = 0.2$.\\
+	5. On the same figure, plot the error rates and probabilities of error of these tests to verify that the theoretical results are experimentally verified by your Monte-Carlo simulations and compare the performance of the MPE and NP tests. In particular, verify numerically the inequality stated in question 4.\\
+	6. Can you explain the difference in performance of the Neyman-Pearson and Bayesian classifiers?
+\end{tquesto}
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics{Error_rate.pdf}
 \end{figure}
+
+D'après la figure obtenue ci-dessous, on voit que le test MPE a tendance à avoir un taux d'erreur et une probabilité d'erreur plus faibles par rapport au test NP. Dans le cadre de notre problème, le test MPE semble être le meilleur choix pour réduire les erreurs de classification.\\
+
+6. On peut expliquer cette différence de performances par le fait que le test MPE cherche à maximiser la probabilité a posteriori pour choisir l'hypothèse la plus probable compte tenu des données et des probabilités a priori. En revanche, le test NP vise à contrôler strictement le taux d'erreur de Type I (faux positifs) avec le seuil tout en maximisant la puissance du test.
 \end{document}
