@@ -113,7 +113,7 @@ Montrons d'abord que:
 \begin{align*}
 	\colorboxed{red}{\text{Si} \quad Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) \quad \text{alors} \quad Z^T\theta \sim \mathcal{N}(a\|\theta\|^2, \|\theta\|^2\sigma^2) \quad (\ast)}
 \end{align*}
-Soit $ Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) $.  $ Z^T\theta $ est gaussien puisque c'est une combinaison linéaire d'éléments d'un vecteur gaussien.\\
+Soit $ Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) $.  $ Z^T\theta $ est une gaussienne puisque c'est une combinaison linéaire d'éléments d'un vecteur gaussien.\\
 Il suffit donc de montrer que :
 $\begin{cases}
 	\mathbb{E}[Z^T\theta] = a\|\theta\|^2 \\
@@ -131,7 +131,7 @@ $$
 Puisque la matrice de covariance de Z vaut $ \sigma^2\mathbf{I}_N $, on obtient:
 $$ 
 	\mathbb{V}[Z^T\theta] = \sum_{i=1}^{N} \sum_{j=1}^{N} \theta_{i}\theta_{j}\sigma^2\delta_{ij} =\sigma^2 \sum_{i=1}^{N} \theta_{i}^2 = \sigma^2\|\theta\|^2 $$
-On peut maintenant répondre à la question on utilisant le résultat démontré ci-dessus.
+On peut maintenant répondre à la question en utilisant le résultat démontré ci-dessus.
 Par définition, la probabilité d'erreur est donnée par : 
 $$
     \ens{P}_e\left(g_\text{MPE}(X)\right)  = \pi_0 \ens{P}\left(g_\text{MPE}(X_0) = 1 \right) + \pi_1 \ens{P}\left(g_\text{MPE}(X_1) = 0 \right) $$
