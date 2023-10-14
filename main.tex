@@ -111,7 +111,7 @@ tion $\mathcal{N}(0,1)$.\\
 \end{tquesto}
 Montrons d'abord que:
 \begin{align*}
-	\text{Si} \quad Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) \quad \text{alors} \quad Z^T\theta \sim \mathcal{N}(a\|\theta\|^2, \|\theta\|^2\sigma^2)
+	\colorboxed{red}{\text{Si} \quad Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) \quad \text{alors} \quad Z^T\theta \sim \mathcal{N}(a\|\theta\|^2, \|\theta\|^2\sigma^2) \quad (\ast)}
 \end{align*}
 Soit $ Z \sim \mathcal{N}(a\theta, \sigma^2\mathbf{I}_N) $.  $ Z^T\theta $ est gaussien puisque c'est une combinaison linéaire d'éléments d'un vecteur gaussien.\\
 Il suffit donc de montrer que :
@@ -142,7 +142,7 @@ Donc
     \pi_0 \ens{P}\left(X_0^t\cdot\theta >\sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) + \pi_1 \ens{P}\left(X_1^t\cdot\theta 
 \leq \sigma^2\ln(\pi_0/\pi_1) + \norm{\theta}^2/2 \right) 
 \end{align*}
-Or $\begin{cases}
+Or d'après ($\ast$): $\begin{cases}
     X_0^t\cdot\theta \sim \mathcal{N}(0,\sigma^2\norm{\theta}^2) \\
     X_1^t\cdot\theta \sim \mathcal{N}(\norm{\theta}^2,\sigma^2\norm{\theta}^2)
 \end{cases} \Longrightarrow \begin{cases}
@@ -171,7 +171,7 @@ $$\begin{cases}
 \end{cases}
 $$
 Ce qui donne finalement : 
-$$  \ens{P}_e (g_\text{MPE}) =   \pi_0 \left( 1-\Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2}\right) \right) +\pi_1 \Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} - \dfrac{\rho}{2}\right) $$
+$$  \colorboxed{red}{\ens{P}_e (g_\text{MPE}) =   \pi_0 \left( 1-\Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} + \dfrac{\rho}{2}\right) \right) +\pi_1 \Phi \left( \dfrac{1}{\rho}\ln\dfrac{\pi_0}{\pi_1} - \dfrac{\rho}{2}\right)} $$
 
 
 \subsection{A detour by the Neyman-Pearson theory}
